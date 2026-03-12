@@ -86,7 +86,7 @@ if "url_loaded" not in st.session_state:
     st.session_state.url_loaded = False
 
 # Configure API
-os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY", "AIzaSyA9ATEdHve6eze4IIY-QpowNevcxZ8w8d4")
+os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 # Initialize LLM
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7)
