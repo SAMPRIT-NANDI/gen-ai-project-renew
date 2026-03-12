@@ -11,7 +11,7 @@ if "context" not in st.session_state:
     st.session_state.context = ""
 
 # LLM
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7)
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.7)
 
 def get_url_text(url):
     try:
