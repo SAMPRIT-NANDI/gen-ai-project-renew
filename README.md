@@ -1,1 +1,40 @@
-# GEN_AI-BCT-FINAL-PROJECT 🚀\n\nA URL-based RAG chatbot that fetches webpages, chunks text, retrieves relevant parts, and answers via Gemini in a beautiful Streamlit chat UI.\n\n## Quick Local Run (Terminal)\n\n```bash\ncd \"c:/Users/SAMPRIT/OneDrive/Desktop/resume/GEN_AI-BCT-FINAL-PROJECT\"\nset GOOGLE_API_KEY=your_actual_key_here\npip install -r requirements.txt\nstreamlit run streamlit_app.py\n```\n\n✅ Opens http://localhost:8501\n\n## Deploy to Streamlit Cloud (Free/Public)\n\n1. Push to GitHub repo\n2. Go to https://share.streamlit.io/\n3. Connect GitHub repo\n4. Add secret: `GOOGLE_API_KEY = your_key`\n5. Deploy → Live URL!\n\n**Notes:**\n- Uses st.secrets for secure API key (no hardcode)\n- Keyword-based retrieval (no vector DB for simplicity/deploy ease)\n- Tested deps in requirements.txt\n\n## Features\n- 🌐 Load any public URL\n- 💬 Chat interface\n- 🎨 Custom gradient theme\n- ⚡ Fast keyword matching + Gemini\n
+# Gemini AI Chatbot - Streamlit App
+
+## 🎯 Features
+- 🚀 Fast Gemini 2.5 Flash conversations via LangChain
+- 📄 Optional webpage context (RAG-like)
+- 🎨 Beautiful responsive UI
+- 🔑 API key in `.streamlit/secrets.toml`
+- Minimal deps, production ready
+
+## 🏃 Local Run
+```
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+Open http://localhost:8501
+
+## ☁️ Deploy to Streamlit Cloud (5 mins)
+1. Push to GitHub repo
+2. Go to [streamlit.io/cloud](https://streamlit.io/cloud)
+3. "Deploy an app" → Connect GitHub repo
+4. Select `streamlit_app.py`
+5. **Advanced**: Add `GOOGLE_API_KEY` in secrets
+6. Deploy!
+
+App live instantly. Free tier ok for testing.
+
+## 🔧 Requirements
+See `requirements.txt`
+
+## 📝 Secrets.toml (local + cloud)
+```
+GOOGLE_API_KEY = "your_key_here"
+```
+
+## 🎉 Test
+- Chat normally
+- Sidebar: Add URL → "Add Context"
+- Clear anytime
+
+Made simple & deployable! 🚀
