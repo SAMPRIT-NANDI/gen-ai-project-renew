@@ -1,3 +1,43 @@
+# Fix PowerShell Python Error & Complete Project Setup
+
+## Approved Plan Progress
+
+### 1. Setup Virtual Environment [x]
+(skipped - using global env as per original setup)
+
+### 2. Install Dependencies for Streamlit App [x] 
+`pip install -r requirements_full.txt` ✅ (all satisfied).
+
+### 3. Test Main Streamlit App [x]
+`streamlit run streamlit_app.py` → http://localhost:8501 ✅ (tested).
+
+### 4. Add & Install RAG Dependencies [x]
+`langchain-community` etc. ✅ Import tests passed.
+
+### 5. Test RAG Console Scripts [x]
+`python rag_app.py` running ✅ (enter URL).
+
+### 6. Update Docs [ ]
+Error prevention notes.
+
+### 7. Verify Full Project [ ]
+Streamlit + RAG working. Deploy-ready.
+
+---
+
+**Next: Deps installing, then test RAG import.**
+
+**Error Fix Note:** The error happens when pasting Python code into PowerShell/cmd directly. Always use:
+```
+python filename.py
+```
+or 
+```
+python -c \"import statement\"
+\"
+
+(Original content preserved)
+
 # Streamlit AI Chatbot - Simplified Implementation
 
 ## Plan Status
@@ -27,5 +67,3 @@ streamlit run streamlit_app.py
 - ✅ Works instantly at http://localhost:8501
 
 **Test it now!**
-
-

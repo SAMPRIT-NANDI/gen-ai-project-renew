@@ -1,0 +1,10 @@
+streamlit>=1.38.0
+langchain-google-genai
+langchain-core
+langchain-community
+langchain-text-splitters
+langchain-huggingface
+faiss-cpu
+requests>=2.32.0
+beautifulsoup4>=4.12.0
+google-generativeai

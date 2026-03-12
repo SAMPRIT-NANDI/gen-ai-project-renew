@@ -1,4 +1,6 @@
-# Gemini AI Chatbot - Streamlit App
+# Gemini AI Chatbot - Fixed & Complete ✅
+
+**Error Fix**: Use `python filename.py` - don't paste imports in terminal!
 
 ## 🎯 Features
 - 🚀 Fast Gemini 2.5 Flash conversations via LangChain
