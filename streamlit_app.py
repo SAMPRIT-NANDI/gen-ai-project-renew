@@ -13,48 +13,17 @@ if "context" not in st.session_state:
 if "llm_choice" not in st.session_state:
     st.session_state.llm_choice = "Gemini"
 
-# Debug: Check if secrets are loaded
-with st.sidebar.expander("🔍 Debug Info (for troubleshooting)"):
-    st.write(f"GOOGLE_API_KEY present: {'✅' if st.secrets.get('GOOGLE_API_KEY') else '❌'}")
-    st.write(f"GROQ_API_KEY present: {'✅' if st.secrets.get('GROQ_API_KEY') else '❌'}")
-
-# Initialize clients
-def get_gemini_client():
-    api_key = st.secrets.get("GOOGLE_API_KEY", "")
-    if not api_key:
-        st.error("Please set GOOGLE_API_KEY in Streamlit secrets!")
-        st.stop()
-    return ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
-        temperature=0.7,
-        google_api_key=api_key
-    )
-
-def get_groq_client():
-    api_key = st.secrets.get("GROQ_API_KEY", "")
-    if not api_key:
-        st.error("Please set GROQ_API_KEY in Streamlit secrets!")
-        st.stop()
-    return Groq(
-        api_key=api_key
-    )
-
-def get_url_text(url):
-    try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-        resp = requests.get(url, headers=headers, timeout=15)
-        soup = BeautifulSoup(resp.text, 'html.parser')
-        text = soup.get_text(separator=' ', strip=True)[:5000]
-        return text
-    except Exception as e:
-        return str(e)
-
 st.title("🤖 AI Chat Assistant")
 
-st.info("💡 Tip: Get your free API keys from:\n- Google Gemini: https://aistudio.google.com/\n- Groq: https://console.groq.com/\nThen add them to Streamlit Secrets!")
+st.info("💡 Tip: Get your free API keys from:\n- Google Gemini: https://aistudio.google.com/\n- Groq: https://console.groq.com/")
 
 with st.sidebar:
-    st.header("Settings")
+    st.header("⚙️ Settings")
+    
+    # API Key Inputs (fallback if secrets aren't working)
+    st.subheader("🔑 API Keys")
+    google_api_key = st.text_input("Google Gemini API Key", type="password", value=st.secrets.get("GOOGLE_API_KEY", ""))
+    groq_api_key = st.text_input("Groq API Key", type="password", value=st.secrets.get("GROQ_API_KEY", ""))
     
     # LLM Choice
     st.session_state.llm_choice = st.radio(
@@ -64,15 +33,22 @@ with st.sidebar:
     )
     
     # URL Context
-    st.subheader("Add Context from URL")
+    st.subheader("📄 Add Context from URL")
     url = st.text_input("Enter URL")
     if st.button("Load Context"):
-        text = get_url_text(url)
-        st.session_state.context = text
-        if len(text) > 10:
-            st.success("✅ Context loaded successfully!")
-        else:
-            st.error("❌ Failed to load context")
+        text = ""
+        try:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+            resp = requests.get(url, headers=headers, timeout=15)
+            soup = BeautifulSoup(resp.text, 'html.parser')
+            text = soup.get_text(separator=' ', strip=True)[:5000]
+            st.session_state.context = text
+            if len(text) > 10:
+                st.success("✅ Context loaded successfully!")
+            else:
+                st.error("❌ Failed to load context")
+        except Exception as e:
+            st.error(f"❌ Error loading URL: {str(e)}")
     
     # Clear Context
     if st.session_state.context and st.button("Clear Context"):
@@ -83,6 +59,13 @@ with st.sidebar:
     if st.button("Clear Chat"):
         st.session_state.messages = []
         st.success("✅ Chat cleared")
+    
+    # Debug Info
+    with st.expander("🔍 Debug Info (for troubleshooting)"):
+        st.write(f"Secrets - GOOGLE_API_KEY present: {'✅' if st.secrets.get('GOOGLE_API_KEY') else '❌'}")
+        st.write(f"Secrets - GROQ_API_KEY present: {'✅' if st.secrets.get('GROQ_API_KEY') else '❌'}")
+        st.write(f"Input - GOOGLE_API_KEY length: {len(google_api_key)}")
+        st.write(f"Input - GROQ_API_KEY length: {len(groq_api_key)}")
 
 # Chat interface
 for msg in st.session_state.messages:
@@ -101,11 +84,21 @@ if prompt:
                     full_prompt = f"Use the following context to answer the question. If you don't know the answer, just say you don't know.\n\nContext: {st.session_state.context}\n\nQuestion: {prompt}"
                 
                 if st.session_state.llm_choice == "Gemini":
-                    llm = get_gemini_client()
+                    if not google_api_key:
+                        st.error("Please enter your Google Gemini API Key in the sidebar!")
+                        st.stop()
+                    llm = ChatGoogleGenerativeAI(
+                        model="gemini-1.5-flash",
+                        temperature=0.7,
+                        google_api_key=google_api_key
+                    )
                     response = llm.invoke(full_prompt)
                     answer = response.content
                 else:  # Groq
-                    client = get_groq_client()
+                    if not groq_api_key:
+                        st.error("Please enter your Groq API Key in the sidebar!")
+                        st.stop()
+                    client = Groq(api_key=groq_api_key)
                     chat_completion = client.chat.completions.create(
                         messages=[
                             {
