@@ -17,7 +17,7 @@ if "llm_choice" not in st.session_state:
 def get_gemini_client():
     api_key = st.secrets.get("GOOGLE_API_KEY", "")
     if not api_key:
-        st.error("Please set GOOGLE_API_KEY in .streamlit/secrets.toml")
+        st.error("Please set GOOGLE_API_KEY in Streamlit secrets!")
         st.stop()
     return ChatGoogleGenerativeAI(
         model="gemini-1.5-flash",
@@ -28,7 +28,7 @@ def get_gemini_client():
 def get_groq_client():
     api_key = st.secrets.get("GROQ_API_KEY", "")
     if not api_key:
-        st.error("Please set GROQ_API_KEY in .streamlit/secrets.toml")
+        st.error("Please set GROQ_API_KEY in Streamlit secrets!")
         st.stop()
     return Groq(
         api_key=api_key
@@ -46,7 +46,7 @@ def get_url_text(url):
 
 st.title("🤖 AI Chat Assistant")
 
-st.info("💡 Tip: Get your free API keys from:\n- Google Gemini: https://aistudio.google.com/\n- Groq: https://console.groq.com/\nThen add them to `.streamlit/secrets.toml`!")
+st.info("💡 Tip: Get your free API keys from:\n- Google Gemini: https://aistudio.google.com/\n- Groq: https://console.groq.com/\nThen add them to Streamlit Secrets!")
 
 with st.sidebar:
     st.header("Settings")
