@@ -15,7 +15,7 @@ if "llm_choice" not in st.session_state:
 
 st.title("🤖 AI Chat Assistant")
 
-st.info("💡 Tip: Get your free API keys from:\n- Google Gemini: https://aistudio.google.com/\n- Groq: https://console.groq.com/")
+st.info("💡 Tip: Get your free API keys from:\n- Google Gemini: https://aistudio.google.com/\n- Groq: https://console.groq.com/\n\nExample Groq API Key format: `gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`")
 
 with st.sidebar:
     st.header("⚙️ Settings")
