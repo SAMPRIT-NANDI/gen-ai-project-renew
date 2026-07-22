@@ -22,6 +22,7 @@ with st.sidebar:
     
     # API Key Inputs (fallback if secrets aren't working)
     st.subheader("🔑 API Keys")
+    
     google_api_key = st.text_input("Google Gemini API Key", type="password", value=st.secrets.get("GOOGLE_API_KEY", ""))
     groq_api_key = st.text_input("Groq API Key", type="password", value=st.secrets.get("GROQ_API_KEY", ""))
     
