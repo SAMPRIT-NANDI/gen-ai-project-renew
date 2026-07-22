@@ -13,6 +13,11 @@ if "context" not in st.session_state:
 if "llm_choice" not in st.session_state:
     st.session_state.llm_choice = "Gemini"
 
+# Debug: Check if secrets are loaded
+with st.sidebar.expander("🔍 Debug Info (for troubleshooting)"):
+    st.write(f"GOOGLE_API_KEY present: {'✅' if st.secrets.get('GOOGLE_API_KEY') else '❌'}")
+    st.write(f"GROQ_API_KEY present: {'✅' if st.secrets.get('GROQ_API_KEY') else '❌'}")
+
 # Initialize clients
 def get_gemini_client():
     api_key = st.secrets.get("GOOGLE_API_KEY", "")
