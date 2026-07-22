@@ -15,15 +15,23 @@ if "llm_choice" not in st.session_state:
 
 # Initialize clients
 def get_gemini_client():
+    api_key = st.secrets.get("GOOGLE_API_KEY", "")
+    if not api_key:
+        st.error("Please set GOOGLE_API_KEY in .streamlit/secrets.toml")
+        st.stop()
     return ChatGoogleGenerativeAI(
         model="gemini-1.5-flash",
         temperature=0.7,
-        google_api_key=st.secrets.get("GOOGLE_API_KEY", "")
+        google_api_key=api_key
     )
 
 def get_groq_client():
+    api_key = st.secrets.get("GROQ_API_KEY", "")
+    if not api_key:
+        st.error("Please set GROQ_API_KEY in .streamlit/secrets.toml")
+        st.stop()
     return Groq(
-        api_key=st.secrets.get("GROQ_API_KEY", "")
+        api_key=api_key
     )
 
 def get_url_text(url):
